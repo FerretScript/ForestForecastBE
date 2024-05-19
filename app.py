@@ -45,7 +45,7 @@ def get_image1():
 def get_geojson():
   # Read data from CSV and create GeoJSON features
   features = []
-  with open('/Data/ForestForecast.csv') as csvfile:
+  with open('./Data/ForestForecast.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
       # Assuming latitude is in 'latitude' column and longitude is in 'longitude' column
