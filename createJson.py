@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from app import app
+from app import app  # Assuming your app initialization is in a separate file
 import csv
 
 @app.route('/geojson')
@@ -10,14 +10,18 @@ def get_geojson():
     reader = csv.DictReader(csvfile)
     for row in reader:
       # Assuming latitude is in 'latitude' column and longitude is in 'longitude' column
+      # and brightness is in 'brightness' column
       latitude = float(row['latitude'])
       longitude = float(row['longitude'])
-      # Add other properties from the CSV row to the feature dictionary
-      properties = {key: value for key, value in row.items() if key not in ['latitude', 'longitude']}
+      brightness = float(row['brightness'])
+
+      # Create a GeoJSON feature with properties for Deck.gl heatmap
       features.append({
           "type": "Feature",
           "geometry": {"type": "Point", "coordinates": [longitude, latitude]},
-          "properties": properties
+          "properties": {
+              "weight": brightness  # Property for intensity in Deck.gl heatmap
+          }
       })
 
   # Create GeoJSON feature collection
