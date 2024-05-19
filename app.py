@@ -41,37 +41,23 @@ def serve_static(path):
 def get_image1():
     return send_file('./assets/image1.png', mimetype='image/png')
 
-@app.route('/geojson')
-def get_geojson():
-  # Read data from CSV and create GeoJSON features
-  features = []
+@app.route('/data')  # Changed endpoint name to avoid confusion with GeoJSON
+def get_data():
+  # Read data from CSV and create JSON data
+  data = []
   with open('./Data/ForestForecast.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
       # Assuming latitude is in 'latitude' column and longitude is in 'longitude' column
-      # and brightness is in 'brightness' column
-      latitude = float(row['latitude'])
-      longitude = float(row['longitude'])
-      brightness = float(row['brightness'])
-
-      # Create a GeoJSON feature with properties for Deck.gl heatmap
-      features.append({
-          "type": "Feature",
-          "geometry": {"type": "Point", "coordinates": [longitude, latitude]},
-          "properties": {
-              "weight": brightness  # Property for intensity in Deck.gl heatmap
-          }
+      # and other desired properties are in their corresponding columns
+      data.append({
+          "coordinates": [float(row['longitude']), float(row['latitude'])],  # Swap order for standard GeoJSON
+          "brightness": float(row['brightness']),
+          "track": float(row['track']),
+          "scan": float(row['scan']),
       })
 
-  # Create GeoJSON feature collection
-  geojson = {
-      "type": "FeatureCollection",
-      "features": features
-  }
-
-  # Return GeoJSON as JSON response
-  return jsonify(geojson)
-
+  return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
