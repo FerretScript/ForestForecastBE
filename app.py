@@ -57,6 +57,9 @@ def get_data():
           "scan": float(row['scan']),
       })
 
+      if len(data) >= 20000:
+         return jsonify(data)
+
   return jsonify(data)
 
 if __name__ == '__main__':
