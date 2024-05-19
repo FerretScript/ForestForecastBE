@@ -3,7 +3,7 @@ from flask_cors import CORS
 import csv
 
 app = Flask(__name__, static_folder='static')
-CORS(app, origins=['http://localhost:5173'])
+CORS(app, origins=['http://localhost:5173', 'forestforecast.lat', 'www.forestforecast.lat', 'forest-forecast.vercel.app'])
 
 @app.route('/', methods=['GET'])
 def get_root():
