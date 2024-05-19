@@ -4,6 +4,10 @@ from flask_cors import CORS
 app = Flask(__name__, static_folder='static')
 CORS(app, origins=['http://localhost:5173'])
 
+@app.route('/', methods=['GET'])
+def get_root():
+    return '<b><h1>T H E <br/> G A M E</h1></b>'
+
 @app.route('/polygon', methods=['GET'])
 def get_polygon():
     coordinates = [
