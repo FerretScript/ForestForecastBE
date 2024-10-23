@@ -1,6 +1,5 @@
 # Forest Forecast Model
 
-!License
 
 ## Description
 
